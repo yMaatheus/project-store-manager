@@ -2,14 +2,14 @@ const connection = require('../database/connection');
 
 const getAll = async () => {
   const query = 'SELECT * FROM StoreManager.products';
-  const [products] = await connection.execute(query);
-  return products;
+  const [rows] = await connection.execute(query);
+  return rows;
 };
 
-const getById = async (productId) => {
+const getById = async (id) => {
   const query = 'SELECT * FROM StoreManager.products WHERE id = ?';
-  const [product] = await connection.execute(query, [productId]);
-  return product[0];
+  const [rows] = await connection.execute(query, [id]);
+  return rows;
 };
 
 module.exports = { getAll, getById };
