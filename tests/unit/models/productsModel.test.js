@@ -22,8 +22,8 @@ describe('Testando Products Model:', () => {
     });
 
     it('Retorna uma lista de produtos', async () => {
-      const product = await productsModel.getAll();
-      expect(product).to.deep.equal([{ id: 1, name: "Martelo de Thor" }, { id: 2, name: "Traje de encolhimento" }]);
+      const products = await productsModel.getAll();
+      expect(products).to.deep.equal([{ id: 1, name: "Martelo de Thor" }, { id: 2, name: "Traje de encolhimento" }]);
     });
 
   });
