@@ -4,44 +4,37 @@ const sinon = require('sinon');
 const connection = require('../../../database/connection');
 const { productsModel } = require('../../../models');
 
+const data = [{ id: 1, name: "Martelo de Thor" }, { id: 2, name: "Traje de encolhimento" }];
+
 describe('models/productsModel', () => {
+  afterEach(sinon.restore);
   describe('A função getAll', () => {
 
-    before(async () => {
-      const RESULT = [{ id: 1, name: "Martelo de Thor" }, { id: 2, name: "Traje de encolhimento" }];
-      sinon.stub(connection, 'execute').resolves([RESULT]);
-    });
-
-    after(async () => {
-      connection.execute.restore();
+    beforeEach(async () => {
+      sinon.stub(connection, 'execute').resolves([data]);
     });
 
     it('Retorna uma lista', async () => {
       const products = await productsModel.getAll();
+
       expect(products).to.be.an('array');
     });
 
     it('Retorna uma lista de produtos', async () => {
       const products = await productsModel.getAll();
-      expect(products).to.deep.equal([{ id: 1, name: "Martelo de Thor" }, { id: 2, name: "Traje de encolhimento" }]);
+
+      expect(products).to.deep.equal(data);
     });
 
   });
 
   describe('A função getById', () => {
+    it('Retorna o produto pedido', async () => {
+      sinon.stub(connection, 'execute').resolves([data[0]]);
 
-    before(async () => {
-      const RESULT = { id: 1, name: "Martelo de Thor" };
-      sinon.stub(connection, 'execute').resolves([RESULT]);
-    });
-
-    after(async () => {
-      connection.execute.restore();
-    });
-
-    it('Retorna um produto específico', async () => {
       const product = await productsModel.getById(1);
-      expect(product).to.deep.equal({ id: 1, name: "Martelo de Thor" });
+
+      expect(product).to.deep.equal(data[0]);
     });
   });
 });
