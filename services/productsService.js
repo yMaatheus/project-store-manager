@@ -2,6 +2,7 @@ const { productsModel } = require('../models');
 
 const getAll = async () => {
   const products = await productsModel.getAll();
+  if (!products || products.length === 0) return null;
   return products;
 };
 
