@@ -1,11 +1,10 @@
+const { expect } = require('chai');
+const sinon = require('sinon');
+
 const { productsService } = require('../../../services');
 const { productsModel } = require('../../../models');
 
-const sinon = require('sinon');
-const { expect } = require('chai');
-const e = require('express');
-
-describe('Testando Products Service:', () => {
+describe('services/productsService', () => {
 
   describe('A função getAll', () => {
 

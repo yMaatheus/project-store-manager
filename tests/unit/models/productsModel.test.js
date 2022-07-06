@@ -1,10 +1,10 @@
-const sinon = require('sinon');
 const { expect } = require('chai');
+const sinon = require('sinon');
 
 const connection = require('../../../database/connection');
 const { productsModel } = require('../../../models');
 
-describe('Testando Products Model:', () => {
+describe('models/productsModel', () => {
   describe('A função getAll', () => {
 
     before(async () => {
