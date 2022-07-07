@@ -14,6 +14,7 @@ const routes = require('./routers');
 const errorMiddleware = require('./middlewares/errorMiddleware');
 
 app.use('/products', rescue(routes.productsRouter));
+app.use('/sales', rescue(routes.salesRouter));
 app.use(errorMiddleware);
 
 // não remova essa exportação, é para o avaliador funcionar
