@@ -8,7 +8,7 @@ const data = [{ id: 1, name: "Martelo de Thor" }, { id: 2, name: "Traje de encol
 
 describe('models/productsModel', () => {
   afterEach(sinon.restore);
-  describe('A função getAll', () => {
+  describe('getAll', () => {
 
     beforeEach(async () => {
       sinon.stub(connection, 'execute').resolves([data]);
@@ -28,13 +28,23 @@ describe('models/productsModel', () => {
 
   });
 
-  describe('A função getById', () => {
+  describe('getById', () => {
     it('Retorna o produto pedido', async () => {
       sinon.stub(connection, 'execute').resolves([data[0]]);
 
       const product = await productsModel.getById(1);
 
       expect(product).to.deep.equal(data[0]);
+    });
+  });
+
+  describe('create', () => {
+    it('Retorna o insertId', async () => {
+      sinon.stub(connection, 'execute').resolves([{ insertId: 1 }]);
+
+      const insertId = await productsModel.create();
+
+      expect(insertId).to.equal(1);
     });
   });
 });

@@ -8,7 +8,7 @@ const data = [{ id: 1, name: "Martelo de Thor" }, { id: 2, name: "Traje de encol
 
 describe('controllers/productsController', () => {
   afterEach(sinon.restore);
-  describe('Ao chamar getAll', () => {
+  describe('getAll', () => {
 
     it('Se não houver produtos retorna 404 e uma mensagem de produtos não encontrados', async () => {
       sinon.stub(productsService, 'getAll').resolves(null);
@@ -37,7 +37,7 @@ describe('controllers/productsController', () => {
     });
   });
 
-  describe('Ao chamar getById', () => {
+  describe('getById', () => {
     it('Se o produto não for encontrado retorna o codigo 404 e uma mensagem produto não encontrado', async () => {
       sinon.stub(productsService, 'getById').resolves(null);
       const req = { params: { id: '1' } };
@@ -66,5 +66,40 @@ describe('controllers/productsController', () => {
       expect(res.json.calledWith(data[0])).to.true;
     });
 
+  });
+
+  describe('create', () => {
+    it('Se o produto não for criado chama o next com um erro', async () => {
+      sinon.stub(productsService, 'create').resolves(null);
+      const errorMessage = 'Não foi possivel criar um produto.';
+
+      const req = { body: {} };
+      const res = {
+        status: sinon.stub().callsFake(() => res),
+        json: sinon.stub().returns(),
+      }
+      const next = sinon.stub().returns();
+
+      await productsController.create(req, res, next);
+
+      expect(next.calledOnce).to.true;
+      expect(next.getCall(0).args[0].message).to.equal(errorMessage);
+    });
+
+    it('Se o produto for criado retorna codigo 201 nome e o id do produto criado', async () => {
+      sinon.stub(productsService, 'create').resolves({ id: 1, name: 'Martelo Enferrujado' });
+
+      const req = { body: { name: 'Martelo Enferrujado' } };
+      const res = {
+        status: sinon.stub().callsFake(() => res),
+        json: sinon.stub().returns(),
+      }
+      const next = sinon.stub().returns();
+
+      await productsController.create(req, res, next);
+
+      expect(res.status.calledWith(201)).to.true;
+      expect(res.json.calledWith({ id: 1, name: 'Martelo Enferrujado' })).to.true;
+    });
   });
 });
