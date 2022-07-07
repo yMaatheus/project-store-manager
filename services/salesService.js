@@ -27,4 +27,21 @@ const create = async (products) => {
   return { id: saleId, itemsSold: values };
 };
 
-module.exports = { create };
+const getAll = async () => {
+  const data = await salesModel.getAll();
+  if (!data || data.length === 0) return null;
+
+  return data;
+};
+
+const getById = async (id) => {
+  if (!id || typeof id !== 'number') return null;
+
+  const sale = await salesModel.getById(id);
+
+  if (!sale || sale.length === 0) return null;
+
+  return sale;
+};
+
+module.exports = { create, getAll, getById };
