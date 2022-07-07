@@ -12,4 +12,10 @@ const getById = async (id) => {
   return product[0];
 };
 
-module.exports = { getAll, getById };
+const create = async (name) => {
+  if (!name) return null;
+  const id = await productsModel.create(name);
+  return { id, name };
+};
+
+module.exports = { getAll, getById, create };
