@@ -43,4 +43,88 @@ describe('controllers/salesController', () => {
       expect(res.json.calledWith(resolves)).to.true;
     });
   })
+
+  describe('getAll', () => {
+    it('Se não encontrar vendas retorna o codigo 404', async () => {
+      sinon.stub(salesService, 'getAll').resolves(null);
+      const res = {
+        status: sinon.stub().returns(),
+      }
+
+      await salesController.getAll({}, res);
+
+      expect(res.status.calledWith(404)).to.true;
+    });
+    it('Se encontrar vendas retorna o codigo 200 e a lista de vendas', async () => {
+      const data = [
+        {
+          saleId: 1,
+          date: "2022-07-07T07:38:08.000Z",
+          productId: 1,
+          quantity: 5
+        },
+        {
+          saleId: 2,
+          date: "2022-07-07T07:38:08.000Z",
+          productId: 3,
+          quantity: 15
+        }
+      ];
+
+      sinon.stub(salesService, 'getAll').resolves(data);
+
+      const res = {
+        status: sinon.stub().callsFake(() => res),
+        json: sinon.stub().returns(),
+      }
+
+      await salesController.getAll({}, res);
+
+      expect(res.status.calledWith(200)).to.true;
+      expect(res.json.calledWith(data)).to.true;
+    });
+  })
+
+  describe('getById', () => {
+    it('Se não encontrar nenhuma venda com o id pedido retorna codigo 404 e "Sale not found"', async () => {
+      sinon.stub(salesService, 'getById').resolves(null);
+      const req = { params: { id: '1' } };
+      const res = {
+        status: sinon.stub().callsFake(() => res),
+        json: sinon.stub().returns(),
+      }
+
+      await salesController.getById(req, res);
+
+      expect(res.status.calledWith(404)).to.true;
+      expect(res.json.calledWith({ message: 'Sale not found' })).to.true;
+    });
+    it('Se encontrar uma venda retorna codigo 200 e a lista de produtos', async () => {
+      const data = [
+        {
+          saleId: 1,
+          date: "2022-07-07T07:38:08.000Z",
+          productId: 1,
+          quantity: 5
+        },
+        {
+          saleId: 2,
+          date: "2022-07-07T07:38:08.000Z",
+          productId: 3,
+          quantity: 15
+        }
+      ]
+      sinon.stub(salesService, 'getById').resolves(data);
+      const req = { params: { id: '1' } };
+      const res = {
+        status: sinon.stub().callsFake(() => res),
+        json: sinon.stub().returns(),
+      }
+
+      await salesController.getById(req, res);
+
+      expect(res.status.calledWith(200)).to.true;
+      expect(res.json.calledWith(data)).to.true;
+    });
+  })
 });

@@ -87,7 +87,7 @@ describe('services/salesService', () => {
       expect(sales).to.be.null;
     });
 
-    it('Retorna a lista de vendas', async () => {
+    it('Retorna a lista de produtos', async () => {
       const data = [
         {
           saleId: 1,
