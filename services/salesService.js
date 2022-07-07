@@ -28,20 +28,20 @@ const create = async (products) => {
 };
 
 const getAll = async () => {
-  const data = await salesModel.getAll();
-  if (!data || data.length === 0) return null;
+  const sales = await salesModel.getAll();
+  if (!sales || sales.length === 0) return null;
 
-  return data;
+  return sales;
 };
 
 const getById = async (id) => {
   if (!id || typeof id !== 'number') return null;
 
-  const sale = await salesModel.getById(id);
+  const sales = await salesModel.getById(id);
 
-  if (!sale || sale.length === 0) return null;
+  if (!sales || sales.length === 0) return null;
 
-  return sale;
+  return sales;
 };
 
 module.exports = { create, getAll, getById };
