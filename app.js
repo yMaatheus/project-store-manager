@@ -11,10 +11,10 @@ app.get('/', (_request, response) => {
 });
 
 const routes = require('./routers');
-const middlewares = require('./middlewares');
+const errorMiddleware = require('./middlewares/errorMiddleware');
 
 app.use('/products', rescue(routes.productsRouter));
-app.use(middlewares.errorMiddleware);
+app.use(errorMiddleware);
 
 // não remova essa exportação, é para o avaliador funcionar
 // você pode registrar suas rotas normalmente, como o exemplo acima
