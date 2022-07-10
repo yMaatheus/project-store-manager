@@ -75,4 +75,20 @@ describe('services/productsService', () => {
       expect(result).to.deep.equal({ id: 1, name: 'Martelo Enferrujado' });
     });
   })
+
+  describe('update', () => {
+    it('Se os parametros forem invalidos retorna null', async () => {
+      const result = await productsService.update();
+
+      expect(result).to.be.null;
+    });
+
+    it('Se o os parametros forem validos retorna um objeto com id e name', async () => {
+      sinon.stub(productsModel, 'update').resolves({ id: 1, name: 'Martelo' });
+
+      const result = await productsService.update(1, 'Martelo');
+
+      expect(result).to.deep.equal({ id: 1, name: 'Martelo' });
+    });
+  });
 });
