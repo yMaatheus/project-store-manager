@@ -47,4 +47,14 @@ describe('models/productsModel', () => {
       expect(insertId).to.equal(1);
     });
   });
+
+  describe('update', () => {
+    it('Retorna um objeto com o id e nome do produto', async () => {
+      sinon.stub(connection, 'execute').resolves();
+
+      const product = await productsModel.update('Martelo', 1);
+
+      expect(product).to.deep.equal({ id: 1, name: 'Martelo' });
+    });
+  });
 });
