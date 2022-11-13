@@ -1,4 +1,6 @@
 const { productsModel } = require('../models');
+const productsValidate = require('./validates/products.validate');
+const errorUtil = require('../utils/error.util');
 
 const getAll = async () => {
   const products = await productsModel.getAll();
@@ -18,4 +20,16 @@ const create = async (name) => {
   return { id, name };
 };
 
-module.exports = { getAll, getById, create };
+const update = async (id, body) => {
+  productsValidate.validateUpdateBody(body);
+  const { name } = body;
+
+  const affectedRows = await productsModel.update(id, name);
+
+  // Case affectedRows equal 0
+  if (!affectedRows) throw errorUtil(404, 'Product not found');
+
+  return { name, id };
+};
+
+module.exports = { getAll, getById, create, update };

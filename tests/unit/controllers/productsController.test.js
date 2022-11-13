@@ -102,4 +102,20 @@ describe('controllers/productsController', () => {
       expect(res.json.calledWith({ id: 1, name: 'Martelo Enferrujado' })).to.true;
     });
   });
+  describe('update', () => {
+    it('Se o produto for atualizado retorna status 200 e objeto com id', async () => {
+      sinon.stub(productsService, 'update').resolves({ name: 'Martelo Enferrujado', id: 1 });
+
+      const req = { body: { name: 'Martelo Enferrujado' }, params: { id: 1 } };
+      const res = {
+        status: sinon.stub().callsFake(() => res),
+        json: sinon.stub().returns(),
+      }
+
+      await productsController.update(req, res);
+
+      expect(res.status.calledWith(200)).to.true;
+      expect(res.json.calledWith({ id: 1, name: 'Martelo Enferrujado' })).to.true;
+    });
+  });
 });

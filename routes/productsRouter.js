@@ -5,10 +5,12 @@ const productsMiddleware = require('../middlewares/productsMiddleware');
 
 const router = express.Router();
 
-router.get('/', productsController.getAll);
+router.route('/')
+  .get(productsController.getAll)
+  .post(productsMiddleware.checkName, productsController.create);
 
-router.post('/', productsMiddleware.checkName, productsController.create);
-
-router.get('/:id', productsController.getById);
+router.route('/:id')
+  .get(productsController.getById)
+  .put(productsController.update);
 
 module.exports = router;

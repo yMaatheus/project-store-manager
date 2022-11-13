@@ -1,8 +1,10 @@
-const { expect } = require('chai');
+const chai = require('chai');
+chai.use(require('chai-as-promised'));
 const sinon = require('sinon');
 
 const { productsService } = require('../../../services');
 const { productsModel } = require('../../../models');
+const { expect } = require('chai');
 
 const data = [{ id: 1, name: "Martelo de Thor" }, { id: 2, name: "Traje de encolhimento" }];
 
@@ -77,18 +79,18 @@ describe('services/productsService', () => {
   })
 
   describe('update', () => {
-    it('Se os parametros forem invalidos retorna null', async () => {
-      const result = await productsService.update();
+    it('Se o produto existir atualiza o nome', async () => {
+      sinon.stub(productsModel, 'update').resolves(1);
 
-      expect(result).to.be.null;
-    });
-
-    it('Se o os parametros forem validos retorna um objeto com id e name', async () => {
-      sinon.stub(productsModel, 'update').resolves({ id: 1, name: 'Martelo' });
-
-      const result = await productsService.update(1, 'Martelo');
+      const result = await productsService.update(1, { name: 'Martelo' });
 
       expect(result).to.deep.equal({ id: 1, name: 'Martelo' });
+    });
+
+    it('Se o produto não existir lança um erro', async () => {
+      sinon.stub(productsModel, 'update').resolves(0);
+
+      await expect(productsService.update(1, { name: 'Martelo' })).to.be.rejectedWith(Error);
     });
   });
 });

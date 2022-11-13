@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
 
-const connection = require('../../../database/connection');
+const connection = require('../../../models/connection');
 const { productsModel } = require('../../../models');
 
 const data = [{ id: 1, name: "Martelo de Thor" }, { id: 2, name: "Traje de encolhimento" }];
@@ -50,11 +50,21 @@ describe('models/productsModel', () => {
 
   describe('update', () => {
     it('Retorna um objeto com o id e nome do produto', async () => {
-      sinon.stub(connection, 'execute').resolves();
+      sinon.stub(connection, 'execute').resolves([{ affectedRows: 1 }]);
 
-      const product = await productsModel.update('Martelo', 1);
+      const affectedRows = await productsModel.update('Martelo', 1);
 
-      expect(product).to.deep.equal({ id: 1, name: 'Martelo' });
+      expect(affectedRows).to.equal(1);
     });
   });
+
+  // describe('exclude', () => {
+  //   it('Retorna um objeto com o id e nome do produto', async () => {
+  //     sinon.stub(connection, 'execute').resolves();
+
+  //     const product = await productsModel.update('Martelo', 1);
+
+  //     expect(product).to.deep.equal({ id: 1, name: 'Martelo' });
+  //   });
+  // });
 });
