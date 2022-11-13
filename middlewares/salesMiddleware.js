@@ -18,8 +18,6 @@ const checkSale = (req, res, next) => {
     return error ? getErrorWithCode(error) : null;
   });
 
-  console.log(validates);
-
   const error = validates.find((validate) => validate !== null);
 
   if (error) {
