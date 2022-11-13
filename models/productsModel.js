@@ -1,4 +1,4 @@
-const connection = require('../database/connection');
+const connection = require('./connection');
 
 const getAll = async () => {
   const query = 'SELECT * FROM StoreManager.products';
@@ -18,11 +18,16 @@ const create = async (name) => {
   return insertId;
 };
 
-const update = async (name, id) => {
-  const query = 'UPDATE StoreManager.products SET name = ? WHERE ? = 1';
-  await connection.execute(query, [name, id]);
+const update = async (id, name) => {
+  const query = 'UPDATE StoreManager.products SET name = ? WHERE id = ?';
+  const [{ affectedRows }] = await connection.execute(query, [name, id]);
 
-  return { name, id };
+  return affectedRows;
 };
+
+// const exclude = async (id) => {
+//   const query = 'DELETE FROM StoreManager.products WHERE id = ?';
+//   await connection.execute(query, [id]);
+// };
 
 module.exports = { getAll, getById, create, update };
