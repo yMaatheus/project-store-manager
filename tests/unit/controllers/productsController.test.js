@@ -118,4 +118,20 @@ describe('controllers/productsController', () => {
       expect(res.json.calledWith({ id: 1, name: 'Martelo Enferrujado' })).to.true;
     });
   });
+
+  describe('delete', () => {
+    it('Se o produto for deletado retorna status 204', async () => {
+      sinon.stub(productsService, 'exclude').resolves();
+
+      const req = { params: { id: 1 } };
+      const res = {
+        status: sinon.stub().callsFake(() => res),
+        end: sinon.stub().returns(),
+      }
+
+      await productsController.exclude(req, res);
+
+      expect(res.status.calledWith(204)).to.true;
+    });
+  });
 });

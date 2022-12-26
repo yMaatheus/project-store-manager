@@ -93,4 +93,19 @@ describe('services/productsService', () => {
       await expect(productsService.update(1, { name: 'Martelo' })).to.be.rejectedWith(Error);
     });
   });
+
+  describe('delete', () => {
+    it('deleta o produto', async () => {
+      sinon.stub(productsModel, 'exclude').resolves(1);
+
+      await productsService.exclude(1);
+    });
+
+    it('Se o produto não existir lança um erro', async () => {
+      sinon.stub(productsModel, 'exclude').resolves(0);
+
+      await expect(productsService.exclude(1)).to.be.rejectedWith(Error);
+    });
+  });
+
 });

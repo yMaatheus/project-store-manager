@@ -58,13 +58,13 @@ describe('models/productsModel', () => {
     });
   });
 
-  // describe('exclude', () => {
-  //   it('Retorna um objeto com o id e nome do produto', async () => {
-  //     sinon.stub(connection, 'execute').resolves();
+  describe('exclude', () => {
+    it('Retorna as linhas afetadas pela operação', async () => {
+      sinon.stub(connection, 'execute').resolves([{ affectedRows: 1 }]);
 
-  //     const product = await productsModel.update('Martelo', 1);
+      const affectedRows = await productsModel.exclude(1);
 
-  //     expect(product).to.deep.equal({ id: 1, name: 'Martelo' });
-  //   });
-  // });
+      expect(affectedRows).to.equal(1);
+    });
+  });
 });
