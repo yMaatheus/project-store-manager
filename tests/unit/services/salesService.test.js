@@ -110,4 +110,19 @@ describe('services/salesService', () => {
       expect(sales).to.deep.equal(data);
     });
   })
+
+  describe('delete', () => {
+    it('deleta o produto', async () => {
+      sinon.stub(salesModel, 'exclude').resolves(1);
+
+      await salesService.exclude(1);
+    });
+
+    it('Se o produto não existir lança um erro', async () => {
+      sinon.stub(salesModel, 'exclude').resolves(0);
+
+      await expect(salesService.exclude(1)).to.be.rejectedWith(Error);
+    });
+  });
+
 });

@@ -127,4 +127,21 @@ describe('controllers/salesController', () => {
       expect(res.json.calledWith(data)).to.true;
     });
   })
+
+  describe('delete', () => {
+    it('Se a venda for deletada retorna status 204', async () => {
+      sinon.stub(salesService, 'exclude').resolves();
+
+      const req = { params: { id: 1 } };
+      const res = {
+        status: sinon.stub().callsFake(() => res),
+        end: sinon.stub().returns(),
+      }
+
+      await salesController.exclude(req, res);
+
+      expect(res.status.calledWith(204)).to.true;
+    });
+  });
+
 });
