@@ -5,8 +5,12 @@ const salesMiddleware = require('../middlewares/salesMiddleware');
 
 const router = express.Router();
 
-router.post('/', salesMiddleware.checkSale, salesController.create);
-router.get('/', salesController.getAll);
-router.get('/:id', salesController.getById);
+router.route('/')
+  .post(salesMiddleware.checkSale, salesController.create)
+  .get(salesController.getAll);
+
+router.route('/:id')
+  .get(salesController.getById)
+  .delete(salesController.exclude);
 
 module.exports = router;

@@ -28,4 +28,12 @@ const getById = async (req, res) => {
   res.status(200).json(sale);
 };
 
-module.exports = { create, getAll, getById };
+const exclude = async (req, res) => {
+  const { id } = req.params;
+
+  await salesService.exclude(+id);
+
+  res.status(204).end();
+};
+
+module.exports = { create, getAll, getById, exclude };

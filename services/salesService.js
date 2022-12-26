@@ -1,4 +1,5 @@
 const { salesModel, productsModel } = require('../models');
+const errorUtil = require('../utils/error.util');
 
 const checkProducts = async (products) => {
   if (!products || products.length === 0) return true;
@@ -44,4 +45,12 @@ const getById = async (id) => {
   return sales;
 };
 
-module.exports = { create, getAll, getById };
+const exclude = async (id) => {
+  if (!id || typeof id !== 'number') return null;
+
+  const affectedRows = await salesModel.exclude(id);
+
+  if (!affectedRows) throw errorUtil(404, 'Sale not found');
+};
+
+module.exports = { create, getAll, getById, exclude };
