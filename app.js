@@ -14,6 +14,7 @@ app.get('/', (_request, response) => {
 
 app.use('/products', routes.productsRouter);
 app.use('/sales', routes.salesRouter);
+
 app.use(errorMiddleware);
 
 // não remova essa exportação, é para o avaliador funcionar

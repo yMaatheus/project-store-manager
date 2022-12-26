@@ -32,4 +32,11 @@ const update = async (id, body) => {
   return { name, id };
 };
 
-module.exports = { getAll, getById, create, update };
+const exclude = async (id) => {
+  if (!id || typeof id !== 'number') return null;
+  const affectedRows = await productsModel.exclude(id);
+
+  if (!affectedRows) throw errorUtil(404, 'Product not found');
+};
+
+module.exports = { getAll, getById, create, update, exclude };
