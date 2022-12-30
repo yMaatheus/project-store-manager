@@ -94,11 +94,11 @@ describe('services/productsService', () => {
     });
   });
 
-  describe('delete', () => {
+  describe('exclude', () => {
     it('deleta o produto', async () => {
       sinon.stub(productsModel, 'exclude').resolves(1);
 
-      await productsService.exclude(1);
+      await expect(productsService.exclude(1)).to.be.fulfilled;
     });
 
     it('Se o produto não existir lança um erro', async () => {
@@ -107,5 +107,32 @@ describe('services/productsService', () => {
       await expect(productsService.exclude(1)).to.be.rejectedWith(Error);
     });
   });
+
+  describe('search', () => {
+    it('encontra o produto', async () => {
+      const data = [
+        { "id": 1, "name": "Martelo de Thor" }
+      ]
+
+      sinon.stub(productsModel, 'searchName').resolves(data);
+
+      const result = await productsService.search('Martelo');
+
+      expect(result).to.deep.equal(data);
+    });
+
+    it('exibe todos os produtos', async () => {
+      const data = [
+        { "id": 1, "name": "Martelo de Thor" },
+        { "id": 2, "name": "Capacete do Homem de Ferro" }
+      ]
+
+      sinon.stub(productsModel, 'searchName').resolves(data);
+
+      const result = await productsService.search('');
+
+      expect(result).to.deep.equal(data);
+    });
+  })
 
 });

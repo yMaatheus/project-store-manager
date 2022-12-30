@@ -134,4 +134,46 @@ describe('controllers/productsController', () => {
       expect(res.status.calledWith(204)).to.true;
     });
   });
+
+  describe('search', () => {
+    it('Exibe a lista de produtos', async () => {
+      const data = [
+        { "id": 1, "name": "Martelo de Thor" },
+        { "id": 2, "name": "Capacete do Homem de Ferro" }
+      ]
+      
+      sinon.stub(productsService, 'search').resolves(data);
+
+      const req = { query: { q: '' } };
+      const res = {
+        status: sinon.stub().callsFake(() => res),
+        json: sinon.stub().returns(),
+      }
+
+      await productsController.search(req, res);
+
+      expect(res.status.calledWith(200)).to.true;
+      expect(res.json.calledWith(data)).to.true;
+    });
+
+    it('Exibe o produto buscado', async () => {
+      const data = [
+        { "id": 1, "name": "Martelo de Thor" }
+      ]
+
+      sinon.stub(productsService, 'search').resolves(data);
+
+      const req = { query: { q: 'Martelo' } };
+      const res = {
+        status: sinon.stub().callsFake(() => res),
+        json: sinon.stub().returns(),
+      }
+
+      await productsController.search(req, res);
+
+      expect(res.status.calledWith(200)).to.true;
+      expect(res.json.calledWith(data)).to.true;
+    });
+  });
+
 });

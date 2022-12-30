@@ -67,4 +67,19 @@ describe('models/productsModel', () => {
       expect(affectedRows).to.equal(1);
     });
   });
+
+  describe('searchName', () => {
+    it('Retorna os produtos', async () => {
+      const data = [
+        { "id": 1, "name": "Martelo de Thor" }
+      ]
+
+      sinon.stub(connection, 'execute').resolves(data);
+
+      const result = await productsModel.searchName('Martelo');
+
+      expect(result).to.deep.equal({ id: 1, name: "Martelo de Thor" });
+    });
+  });
+
 });
