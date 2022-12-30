@@ -44,4 +44,12 @@ const exclude = async (req, res) => {
   res.status(204).end();
 };
 
-module.exports = { getAll, getById, create, update, exclude };
+const search = async (req, res) => {
+  const { q } = req.query;
+
+  const products = await productsService.search(q);
+
+  res.status(200).json(products);
+};
+
+module.exports = { getAll, getById, create, update, exclude, search };

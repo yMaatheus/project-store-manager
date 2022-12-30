@@ -39,4 +39,6 @@ const exclude = async (id) => {
   if (!affectedRows) throw errorUtil(404, 'Product not found');
 };
 
-module.exports = { getAll, getById, create, update, exclude };
+const search = async (q) => productsModel.searchName(!q ? '' : q);
+
+module.exports = { getAll, getById, create, update, exclude, search };
