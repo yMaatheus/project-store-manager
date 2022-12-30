@@ -47,8 +47,6 @@ const getById = async (id) => {
 };
 
 const exclude = async (id) => {
-  if (!id || typeof id !== 'number') return null;
-
   const affectedRows = await salesModel.exclude(id);
 
   if (!affectedRows) throw errorUtil(404, 'Sale not found');
