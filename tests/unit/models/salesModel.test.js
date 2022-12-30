@@ -91,7 +91,7 @@ describe('models/salesModel', () => {
     it('successfully', async () => {
       sinon.stub(connection, 'query').resolves();
 
-      expect(salesModel.update(1, { productId: 1, quantity: 10 })).to.be.fulfilled;
+      await expect(salesModel.update(1, { productId: 1, quantity: 10 })).to.be.fulfilled;
     });
   });
 
