@@ -76,7 +76,7 @@ describe('models/salesModel', () => {
       expect(sales).to.deep.equal(data);
     });
   })
-  
+
   describe('exclude', () => {
     it('Retorna as linhas afetadas pela operação', async () => {
       sinon.stub(connection, 'execute').resolves([{ affectedRows: 1 }]);
@@ -84,6 +84,14 @@ describe('models/salesModel', () => {
       const affectedRows = await salesModel.exclude(1);
 
       expect(affectedRows).to.equal(1);
+    });
+  });
+
+  describe('update', () => {
+    it('successfully', async () => {
+      sinon.stub(connection, 'query').resolves();
+
+      expect(salesModel.update(1, { productId: 1, quantity: 10 })).to.be.fulfilled;
     });
   });
 

@@ -125,4 +125,75 @@ describe('services/salesService', () => {
     });
   });
 
+  describe('update', () => {
+    it('atualiza o produto', async () => {
+      const data = [
+        { productId: 1, quantity: 1 },
+        { productId: 2, quantity: 5 },
+      ]
+
+      const expectResult = { saleId: 1, itemsUpdated: [...data] }
+
+      sinon.stub(salesModel, 'getById').resolves([
+        { date: Date.now(), productId: 1, quantity: 5 },
+        { date: Date.now(), productId: 2, quantity: 10 }
+      ]);
+      sinon.stub(salesModel, 'update').resolves();
+
+      const result = await salesService.update(1, data);
+
+      expect(result).to.deep.equal(expectResult);
+    });
+
+    it('Se o productId de algum dos produtos for invalido lança um error', async () => {
+      const data = [
+        { productI: 1, quantity: 1 },
+        { productId: 2, quantity: 5 },
+      ]
+
+      sinon.stub(salesModel, 'getById').resolves();
+      sinon.stub(salesModel, 'update').resolves();
+
+      await expect(salesService.update(1, data)).to.be.rejectedWith(Error);
+    })
+
+    it('Se o quantity de algum dos produtos for invalido lança um error', async () => {
+      const data = [
+        { productId: 1, quantity: 1 },
+        { productId: 2, quantit: 5 },
+      ]
+
+      sinon.stub(salesModel, 'getById').resolves();
+      sinon.stub(salesModel, 'update').resolves();
+
+      await expect(salesService.update(1, data)).to.be.rejectedWith(Error);
+    })
+
+    it('Se a venda não for encontrada lança um error', async () => {
+      const data = [
+        { productId: 1, quantity: 1 },
+        { productId: 2, quantity: 5 },
+      ]
+
+      sinon.stub(salesModel, 'getById').resolves(null);
+      sinon.stub(salesModel, 'update').resolves();
+
+      await expect(salesService.update(1, data)).to.be.rejectedWith(Error);
+    })
+
+    it('Se o produto não for encontrado lança um error', async () => {
+      const data = [
+        { productId: 1, quantity: 1 },
+        { productId: 2, quantity: 5 },
+      ]
+
+      sinon.stub(salesModel, 'getById').resolves([
+        { date: Date.now(), productId: 999, quantity: 5 },
+      ]);
+      sinon.stub(salesModel, 'update').resolves();
+
+      await expect(salesService.update(1, data)).to.be.rejectedWith(Error);
+    })
+  });
+
 });

@@ -144,4 +144,27 @@ describe('controllers/salesController', () => {
     });
   });
 
+  describe('update', () => {
+    it('Se a venda for atualizada retorna status 200', async () => {
+      const data = [
+        { productId: 1, quantity: 1 },
+        { productId: 2, quantity: 5 },
+      ]
+
+      const expectResult = { saleId: 1, itemsUpdated: [...data] }
+      sinon.stub(salesService, 'update').resolves(expectResult);
+
+      const req = { params: { id: 1 }, body: [...data] };
+      const res = {
+        status: sinon.stub().callsFake(() => res),
+        json: sinon.stub().returns(),
+      }
+
+      await salesController.update(req, res);
+
+      expect(res.status.calledWith(200)).to.true;
+      expect(res.json.calledWith(expectResult)).to.true;
+    });
+  });
+
 });
