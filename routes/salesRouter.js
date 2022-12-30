@@ -11,6 +11,7 @@ router.route('/')
 
 router.route('/:id')
   .get(salesController.getById)
-  .delete(salesController.exclude);
+  .delete(salesController.exclude)
+  .put(salesController.update);
 
 module.exports = router;
