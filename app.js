@@ -17,7 +17,7 @@ app.get('/', (_request, response) => {
 app.use('/products', routes.productsRouter);
 app.use('/sales', routes.salesRouter);
 
-app.use('/doc', swaggerUi.serve, swaggerUi.setup(doc));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(doc));
 
 app.use(errorMiddleware);
 
