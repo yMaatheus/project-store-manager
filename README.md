@@ -7,6 +7,7 @@ Projeto realizado no módulo de Back-end durante o curso de Desenvolvimento Web 
 O projeto é uma API construida utilizando a arquitetura MSC (model-service-controller), a qual, consiste em um sistema de gerenciamento de vendas no formato dropshipping em que será possível criar, visualizar, deletar e atualizar produtos e vendas.
 
 [Documentação](https://store-manager.ymaatheus.me/api-docs)
+[Deploy](https://store-manager.ymaatheus.me/)
 
 ### 📋 Pré-requisitos
 
