@@ -34,7 +34,7 @@ Agora que já tem a pasta do projeto na sua máquina, dentro dela instale as dep
 npm install
 ```
 
-Adicione as variaveis de ambiente para efetuar conexão com um banco de dados MySQL:
+Crie o arquivo `.env` e adicione as variaveis de ambiente, siga o exemplo abaixo:
 
 ```
 MYSQL_HOST=localhost
