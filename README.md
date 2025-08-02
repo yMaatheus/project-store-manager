@@ -19,7 +19,7 @@ Para conseguir seguir este README e rodar o projeto você pode precisar dos segu
 Para ter acesso aos arquivos do projeto você pode clonar usando o seguinte comando:
 
 ```
-git clone git@github.com:yMaatheus/project-store-manager.git
+git clone git@github.com:yMaatheus/store-manager.git
 ```
 
 ### 🔧 Instalação
